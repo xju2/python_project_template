@@ -1,9 +1,9 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [project]
-name = "project"
+name = "<project>"
 version = "0.1.0"
 description = ""
 readme = "README.md"
@@ -30,10 +30,26 @@ dev = [
 [project.urls]
 Homepage = ""
 
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "~=3.7.1"
+ruff = "~=0.9.7"
+pytest = "~=8.2.1"
+pytest-cov = "~=5.0.0"
+ipykernel = "~=6.29.4"
+ipywidgets = "~=8.1.5"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocstrings-python = "^1.16.10"
+pymdown-extensions = "^10.14.3"
+
 [tool.pytest.ini_options]
 addopts = [
     "--import-mode=importlib",
-    "--cov=llm4tracking",
+    "--cov=<project>",
     "--color=yes",
     "--doctest-modules",
     "--strict-markers",
@@ -44,14 +60,8 @@ line-length = 99
 target-version = "py39"
 exclude = ["*ipynb"]
 preview = true
-
-[tool.ruff.format]
-docstring-code-format = true
-quote-style = "double"
-
-[tool.ruff.lint]
 # NOTE: Synchoronize the ignores with .flake8
-ignore = [
+lint.ignore = [
     # these ignores are from flake8-bugbear; please fix!
     "B007", "B008", "B017",
     "B018", # Useless expression
@@ -86,9 +96,9 @@ ignore = [
     "SIM116", # Disable Use a dictionary instead of consecutive `if` statements
     "SIM117",
     "SIM118",
-    "UP007", # keep-runtime-typing
+    "UP007" # keep-runtime-typing
 ]
-select = [
+lint.select = [
     "B",
     "B904", # Re-raised error without specifying the cause via the from keyword
     "C4",
@@ -136,6 +146,7 @@ select = [
     "PT024",
     "PT025",
     "PT026",
+    "PTH",  # flake8-use-pathlib
     "PYI",
     "Q003",  # avoidable escaped quote
     "Q004",  # unnecessary escaped quote
@@ -150,10 +161,10 @@ select = [
     "RUF024", # from keys mutable
     "RUF026", # default factory kwarg
     "SLOT",
-    "TCH",
     "TRY002", # ban vanilla raise (todo fix NOQAs)
     "TRY401", # verbose-log-message
     "UP",
+    "YTT",  # flak8-2020
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -162,5 +173,5 @@ select = [
 ]
 
 [tool.ruff.lint.pydocstyle]
-convention = "numpy"
+convention = "google"
 
